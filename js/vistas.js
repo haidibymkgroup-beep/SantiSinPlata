@@ -584,6 +584,13 @@
 
     seccionFondo(cont);
 
+    cont.appendChild(ui.seccion('Inicio de la app'));
+    var chkIntro = h('input', { type: 'checkbox', id: 'chk-intro', checked: SSP.intro.preferenciaActiva() });
+    chkIntro.addEventListener('change', function () { SSP.intro.fijarPreferencia(chkIntro.checked); });
+    cont.appendChild(ui.tarjeta('',
+      h('label', { class: 'check', for: 'chk-intro' }, chkIntro, h('span', { texto: 'Mostrar la animación al abrir la app' })),
+      h('div', { class: 'acciones' }, h('button', { type: 'button', class: 'btn secundario', texto: 'Ver animación', onclick: function () { SSP.intro.mostrar(); } }))));
+
     cont.appendChild(ui.seccion('Categorías'));
     cont.appendChild(h('div', { class: 'lista tarjeta' }, ui.fila({ icono: '🏷️', titulo: 'Administrar categorías', sub: 'Crear, archivar o eliminar', onclick: abrirCategorias })));
 

@@ -17,7 +17,8 @@ Todo proyecto de esta cuenta lleva la insignia de **Haidiby Marketing Group**. A
 
 ## Logo
 - Archivos en `img/`: `marca-h.png` (la H con estrella, blanca, para fondos de color), `logo-marca.png` (logo completo en `#9C297F`, para fondos claros) y `logo-marca-oscuro.png` (en `#FE9191`, para fondos oscuros).
-- Aparece en: encabezado (la H), pie de Inicio y sección «Acerca de» de Ajustes (logo completo), y como ícono de la app (H blanca sobre el degradado).
+- `marca-texto.png`: la parte «Haidiby Marketing Group» (blanca); junto con `marca-h.png` forma el logo completo en la animación de entrada.
+- Aparece en: animación de entrada, encabezado (la H), pie de Inicio y sección «Acerca de» de Ajustes (logo completo), y como ícono de la app (H blanca sobre el degradado).
 - No deformar, recolorear fuera de la paleta ni agregar sombras al logo.
 
 ## Texto

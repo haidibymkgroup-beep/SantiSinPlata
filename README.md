@@ -96,6 +96,7 @@ js/validators.js      validaciones de formularios y del archivo a importar
 js/domain.js          reglas de cálculo (sin DOM ni localStorage)
 js/store.js           localStorage, migraciones, respaldo, importar/exportar
 js/fondo.js           fondo personalizable (foto reducida o degradado)
+js/intro.js           animación de entrada (saltar, apagar, volver a ver)
 js/charts.js          gráficas en SVG propio
 js/ui.js              componentes: hojas, formularios, avisos (sin innerHTML)
 js/vistas.js          estructura de la app + Inicio, Movimientos, Reportes, Ajustes
@@ -111,6 +112,7 @@ Decisiones de diseño relevantes:
 - **Gasto compartido:** solo *tu parte* cuenta como gasto tuyo; lo demás queda como saldo con cada persona. Liquidar no crea ingresos ni gastos.
 - **Aportes a metas y pagos de deuda** son salidas de dinero, pero en los reportes se agrupan en las categorías *Ahorro* y *Deudas*.
 - **Abono extra a una deuda** reduce el capital y acorta el plazo manteniendo la cuota.
+- **Animación de entrada:** dura ~2 s con el logo de Haidiby Marketing Group. Está en el HTML y el CSS para verse desde el primer cuadro y se oculta sola aunque falle JavaScript. Se salta con un toque, se apaga en Ajustes → Inicio de la app y se acorta con «reducir movimiento».
 - **Fondo personalizado:** la foto se reduce (máx. 1400 px, JPEG) y se guarda en `localStorage` con su propia clave; no entra en los respaldos JSON ni en el CSV. Se aplica con un velo para que el texto siga legible.
 - **Seguridad:** sin peticiones de red, CSP estricta, todo texto del usuario entra al DOM con `textContent`, importación con validación de esquema y descarte de claves peligrosas, CSV protegido contra inyección de fórmulas.
 

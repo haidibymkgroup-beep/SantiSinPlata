@@ -427,7 +427,7 @@ button.tarjeta { display: block; }
 @keyframes entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  *:not(.intro):not(.intro *), *:not(.intro):not(.intro *)::before, *:not(.intro):not(.intro *)::after { transition: none !important; animation: none !important; }
 }
 
 @media (min-width: 520px) {
@@ -462,3 +462,51 @@ button.tarjeta { display: block; }
 .fondo-vista .fondo-velo { opacity: var(--velo, .6); }
 .rango { width: 100%; min-height: 44px; accent-color: var(--primario); }
 .rango-pie { display: flex; justify-content: space-between; font-size: 12px; color: var(--texto-suave); }
+
+/* ---------- animación de entrada ---------- */
+.intro {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; overflow: hidden; cursor: pointer;
+  background: var(--marca-grad); color: #fff;
+  animation: intro-fuera .45s ease 2.4s forwards;   /* se oculta sola aunque falle el script */
+}
+.intro.saliendo { animation: intro-salir .35s ease forwards; }
+.intro::before {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 90vmin; height: 90vmin; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, .26) 0%, rgba(255, 255, 255, 0) 62%);
+  animation: intro-brillo 1.8s ease-out both;
+}
+.intro-centro { position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 0 16px; }
+.intro-logo { display: flex; align-items: center; width: min(80vw, 360px); aspect-ratio: 1740 / 585; }
+.intro-h {
+  flex: none; width: 37.4%; height: 100%; background: url("../img/marca-h.png") center / contain no-repeat;
+  animation: intro-h 1.7s cubic-bezier(.22, .8, .2, 1) both;
+}
+.intro-t {
+  flex: none; width: 62.6%; height: 100%; background: url("../img/marca-texto.png") left center / contain no-repeat;
+  clip-path: inset(0 100% 0 0); opacity: 0;
+  animation: intro-texto .9s cubic-bezier(.3, .7, .2, 1) .8s both;
+}
+.intro-nombre {
+  font-size: 15px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; color: #FFE9F3;
+  opacity: 0; animation: intro-sube .7s ease 1.35s both;
+}
+@keyframes intro-h {
+  0% { opacity: 0; transform: translateX(83.7%) scale(.78); filter: blur(10px); }
+  30% { opacity: 1; transform: translateX(83.7%) scale(1); filter: blur(0); }
+  47% { opacity: 1; transform: translateX(83.7%) scale(1); filter: blur(0); }
+  82%, 100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
+}
+@keyframes intro-texto { from { clip-path: inset(0 100% 0 0); opacity: 0; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+@keyframes intro-sube { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes intro-brillo { 0% { opacity: 0; transform: scale(.6); } 35% { opacity: 1; } 100% { opacity: .55; transform: scale(1.15); } }
+@keyframes intro-fuera { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+@keyframes intro-salir { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+@keyframes intro-fundido { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .intro { animation: intro-fuera .4s ease 1.3s forwards; }
+  .intro::before { display: none; }
+  .intro-h { animation: intro-fundido .5s ease both; }
+  .intro-h, .intro-t { transform: none; }
+  .intro-t { clip-path: none; animation: intro-fundido .5s ease .2s both; }
+  .intro-nombre { animation: intro-fundido .5s ease .5s both; }
+}
