@@ -1,0 +1,15 @@
+{
+  "name": "SantiSinPlata",
+  "short_name": "SantiSinPlata",
+  "description": "Control de gastos, ahorro e ingresos. Todo queda en tu celular.",
+  "lang": "es-CO",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1E293B",
+  "theme_color": "#1E293B",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

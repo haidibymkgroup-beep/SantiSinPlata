@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="theme-color" content="#1E293B">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="SantiSinPlata: controla tus gastos, ahorra y organiza tus ingresos. Todo queda en tu celular.">
+  <title>SantiSinPlata</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <header id="encabezado" class="encabezado"></header>
+    <main id="vista" class="vista" tabindex="-1"></main>
+  </div>
+  <button id="fab" class="fab" type="button" aria-label="Nuevo movimiento" hidden></button>
+  <nav id="nav" class="nav" aria-label="Navegación principal"></nav>
+  <div id="capas"></div>
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+  <noscript><p class="sin-js">SantiSinPlata necesita JavaScript para funcionar. Actívalo en tu navegador.</p></noscript>
+
+  <script src="js/money.js"></script>
+  <script src="js/dates.js"></script>
+  <script src="js/validators.js"></script>
+  <script src="js/domain.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/vistas.js"></script>
+  <script src="js/planear.js"></script>
+  <script src="js/deudas.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
