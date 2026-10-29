@@ -410,7 +410,7 @@
     if (tema === 'claro' || tema === 'oscuro') r.setAttribute('data-tema', tema); else r.removeAttribute('data-tema');
     var oscuro = tema === 'oscuro' || (tema !== 'claro' && root.matchMedia && root.matchMedia('(prefers-color-scheme: dark)').matches);
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', oscuro ? '#0B1220' : '#1E293B');
+    if (meta) meta.setAttribute('content', oscuro ? '#14091A' : '#9C297F');
   }
 
   SSP.ui = {

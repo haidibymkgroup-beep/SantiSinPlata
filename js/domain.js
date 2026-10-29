@@ -23,22 +23,22 @@
 
   // ---------- estado inicial ----------
   var CATEGORIAS_BASE = [
-    ['cat_mercado', 'Mercado', 'gasto', '🛒', '#64748B', false],
-    ['cat_comida', 'Comida fuera', 'gasto', '🍽️', '#B45309', false],
-    ['cat_transporte', 'Transporte', 'gasto', '🚌', '#475569', false],
-    ['cat_vivienda', 'Vivienda', 'gasto', '🏠', '#1E293B', false],
+    ['cat_mercado', 'Mercado', 'gasto', '🛒', '#9C297F', false],
+    ['cat_comida', 'Comida fuera', 'gasto', '🍽️', '#E4406F', false],
+    ['cat_transporte', 'Transporte', 'gasto', '🚌', '#6D3FA0', false],
+    ['cat_vivienda', 'Vivienda', 'gasto', '🏠', '#4A0F7E', false],
     ['cat_servicios', 'Servicios', 'gasto', '💡', '#0E7490', false],
-    ['cat_salud', 'Salud', 'gasto', '🩺', '#9F1239', false],
-    ['cat_educacion', 'Educación', 'gasto', '📚', '#4338CA', false],
-    ['cat_ocio', 'Ocio', 'gasto', '🎬', '#A16207', false],
-    ['cat_ropa', 'Ropa', 'gasto', '👕', '#7C3AED', false],
+    ['cat_salud', 'Salud', 'gasto', '🩺', '#CA2374', false],
+    ['cat_educacion', 'Educación', 'gasto', '📚', '#5B6EE1', false],
+    ['cat_ocio', 'Ocio', 'gasto', '🎬', '#F08A4B', false],
+    ['cat_ropa', 'Ropa', 'gasto', '👕', '#FE9191', false],
     ['cat_suscripciones', 'Suscripciones', 'gasto', '🔁', '#0F766E', false],
     ['cat_ahorro', 'Ahorro', 'gasto', '🐖', '#C8A24A', true],
     ['cat_deudas', 'Deudas', 'gasto', '💳', '#B91C1C', true],
-    ['cat_otros_g', 'Otros', 'gasto', '📦', '#94A3B8', false],
+    ['cat_otros_g', 'Otros', 'gasto', '📦', '#A89BB5', false],
     ['cat_salario', 'Salario', 'ingreso', '💼', '#0F766E', false],
     ['cat_extra', 'Extra', 'ingreso', '✨', '#15803D', false],
-    ['cat_otros_i', 'Otros', 'ingreso', '📥', '#64748B', false]
+    ['cat_otros_i', 'Otros', 'ingreso', '📥', '#7C6A8A', false]
   ];
 
   function categoriasBase() {
@@ -546,7 +546,7 @@
     if (items.length <= n) return items;
     var top = items.slice(0, n), resto = items.slice(n);
     var m = resto.reduce(function (a, x) { return a + x.monto; }, 0), p = resto.reduce(function (a, x) { return a + x.pct; }, 0);
-    top.push({ categoriaId: null, nombre: 'Otros', icono: '', color: '#94A3B8', monto: m, pct: p });
+    top.push({ categoriaId: null, nombre: 'Otros', icono: '', color: '#A89BB5', monto: m, pct: p });
     return top;
   }
 

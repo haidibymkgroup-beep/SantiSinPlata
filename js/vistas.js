@@ -64,7 +64,8 @@
     var est = App.estado, v = estadoUI.vista;
     var per = dates.etiquetaPeriodo(domain.periodo(est, App.hoy()), est.ajustes.diaInicioMes);
     var izq = h('div', { class: 'enc-titulo' },
-      v === 'ajustes' ? h('button', { type: 'button', class: 'icono-btn claro', 'aria-label': 'Volver', onclick: function () { irA('inicio'); } }, icono('atras')) : null,
+      v === 'ajustes' ? h('button', { type: 'button', class: 'icono-btn claro', 'aria-label': 'Volver', onclick: function () { irA('inicio'); } }, icono('atras'))
+        : h('span', { class: 'marca-h', role: 'img', 'aria-label': 'Haidiby Marketing Group' }),
       h('div', null, h('h1', { texto: TITULOS[v] }), h('p', { class: 'enc-sub', texto: v === 'ajustes' ? 'Preferencias y datos' : per })));
     var der = v === 'inicio' ? h('button', { type: 'button', class: 'icono-btn claro', 'aria-label': 'Ajustes', onclick: function () { irA('ajustes'); } }, icono('ajustes')) : null;
     enc.appendChild(h('div', { class: 'enc-fila' }, izq, der));
@@ -189,6 +190,12 @@
     });
   }
 
+  function pieMarca() {
+    return h('div', { class: 'pie-marca' },
+      h('span', { class: 'logo-marca', role: 'img', 'aria-label': 'Haidiby Marketing Group' }),
+      h('p', { texto: 'SantiSinPlata · una app de Haidiby Marketing Group' }));
+  }
+
   // ---------- Inicio ----------
   registro.inicio = function (cont) {
     var est = App.estado, hoy = App.hoy(), r = domain.resumen(est, hoy);
@@ -238,6 +245,7 @@
     } else {
       cont.appendChild(h('div', { class: 'lista tarjeta' }, ult.map(filaMov)));
     }
+    cont.appendChild(pieMarca());
   };
 
   // ---------- Movimientos ----------
@@ -490,6 +498,66 @@
     pintar();
   }
 
+  // Fondo de la app: foto de la fototeca o degradado de la marca. Se guarda aparte de los datos.
+  function seccionFondo(cont) {
+    var F = SSP.fondo, cfg = F.cargar();
+    cont.appendChild(ui.seccion('Fondo de la app'));
+    var velo = cfg ? cfg.velo : F.VELO_DEF;
+    var vista = h('div', { class: 'fondo-vista', role: 'img', 'aria-label': cfg ? 'Vista previa del fondo actual' : 'Sin fondo personalizado' },
+      h('div', { class: 'fondo-velo' }), cfg ? null : h('span', { texto: 'Sin fondo personalizado' }));
+    function pintarVista(c) {
+      var n = F.normalizar(c);
+      vista.style.backgroundImage = !n ? 'none' : (n.tipo === 'foto' ? 'url("' + n.img + '")' : F.DEGRADADO);
+      vista.style.setProperty('--velo', String((n ? n.velo : F.VELO_DEF) / 100));
+    }
+    pintarVista(cfg);
+
+    var archivo = h('input', { type: 'file', accept: 'image/*', hidden: true, 'aria-label': 'Elegir una foto de fondo' });
+    archivo.addEventListener('change', function () {
+      var f = archivo.files && archivo.files[0];
+      archivo.value = '';
+      if (!f) return;
+      ui.toast('Preparando la foto…', { ms: 2500 });
+      F.procesarFoto(f).then(function (img) {
+        var nuevo = { tipo: 'foto', img: img, velo: velo };
+        var r = F.guardar(nuevo);
+        if (!r.ok) { ui.toast(r.error === 'cuota' ? 'No hay espacio para guardar esa foto. Prueba con otra más liviana.' : 'No se pudo guardar el fondo en este navegador.', { error: true }); return; }
+        F.aplicar(nuevo);
+        renderTodo();
+        ui.toast('Fondo actualizado.', {});
+      }).catch(function (e) { ui.toast((e && e.message) || 'No se pudo usar esa foto.', { error: true }); });
+    });
+
+    var rango = h('input', { type: 'range', class: 'rango', min: '0', max: String(F.VELO_MAX), step: '5', value: String(velo), disabled: !cfg, 'aria-label': 'Qué tanto se atenúa el fondo' });
+    rango.addEventListener('input', function () {
+      velo = Number(rango.value);
+      var c = F.cargar();
+      if (c) { c.velo = velo; F.aplicar(c); pintarVista(c); }
+    });
+    rango.addEventListener('change', function () {
+      var c = F.cargar();
+      if (c) { c.velo = Number(rango.value); F.guardar(c); }
+    });
+
+    cont.appendChild(ui.tarjeta('',
+      vista,
+      h('div', { class: 'acciones' },
+        h('button', { type: 'button', class: 'btn primario', texto: 'Elegir foto', onclick: function () { archivo.click(); } }),
+        h('button', {
+          type: 'button', class: 'btn secundario', texto: 'Degradado de la marca',
+          onclick: function () { var n = { tipo: 'degradado', velo: velo }; F.guardar(n); F.aplicar(n); renderTodo(); }
+        })),
+      h('div', { class: 'campo' },
+        h('span', { class: 'etiqueta', texto: 'Intensidad del fondo' }), rango,
+        h('div', { class: 'rango-pie' }, h('span', { texto: 'Más fondo' }), h('span', { texto: 'Más legible' }))),
+      cfg ? h('button', {
+        type: 'button', class: 'btn texto peligro-txt', texto: 'Quitar fondo',
+        onclick: function () { F.quitar(); F.aplicar(null); renderTodo(); ui.toast('Fondo quitado.', {}); }
+      }) : null,
+      h('p', { class: 'ayuda', texto: 'La foto se elige de la fototeca de tu celular y se reduce para ocupar poco espacio. Se guarda solo en este dispositivo y no va en los respaldos.' }),
+      archivo));
+  }
+
   registro.ajustes = function (cont) {
     var est = App.estado, a = est.ajustes;
     cont.appendChild(ui.seccion('Preferencias'));
@@ -513,6 +581,8 @@
     });
     cont.appendChild(ui.tarjeta('', form.el));
     form.validar();
+
+    seccionFondo(cont);
 
     cont.appendChild(ui.seccion('Categorías'));
     cont.appendChild(h('div', { class: 'lista tarjeta' }, ui.fila({ icono: '🏷️', titulo: 'Administrar categorías', sub: 'Crear, archivar o eliminar', onclick: abrirCategorias })));
@@ -565,6 +635,10 @@
         });
       }
     }));
+    cont.appendChild(ui.seccion('Acerca de'));
+    cont.appendChild(ui.tarjeta('acerca',
+      h('span', { class: 'logo-marca', role: 'img', 'aria-label': 'Haidiby Marketing Group' }),
+      h('p', { texto: 'SantiSinPlata es una app de Haidiby Marketing Group.' })));
     cont.appendChild(h('p', { class: 'version', texto: 'SantiSinPlata · versión de datos ' + domain.VERSION }));
   };
 

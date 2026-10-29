@@ -69,6 +69,8 @@
 
   App.borrarTodo = function () {
     store.borrarTodo();
+    SSP.fondo.quitar();
+    SSP.fondo.aplicar(null);
     App.estado = domain.estadoVacio();
     guardar();
     ui.aplicarTema('auto');
@@ -115,6 +117,7 @@
   }
 
   function iniciar() {
+    SSP.fondo.aplicar(SSP.fondo.cargar());
     var r = store.cargar();
     if (r.status === 'corrupto') {
       App.estado = domain.estadoVacio();

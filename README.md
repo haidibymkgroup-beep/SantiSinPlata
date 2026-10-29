@@ -5,7 +5,7 @@ Control de gastos personal para el celular: registra tus ingresos y gastos del d
 - Moneda: **COP**, solo pesos enteros.
 - Datos: `localStorage` del navegador.
 - Tecnología: HTML + CSS + JavaScript sin frameworks ni dependencias.
-- Diseño: minimalista premium, color principal `#1E293B`, modo claro/oscuro.
+- Diseño: minimalista premium con la paleta de **Haidiby Marketing Group** (`#9C297F`, `#CA2374`, `#E4406F`, `#FE9191`), modo claro/oscuro y fondo personalizable. La guía de marca está en `CLAUDE.md`.
 
 ## Qué incluye
 
@@ -17,7 +17,7 @@ Control de gastos personal para el celular: registra tus ingresos y gastos del d
 | **Planear** | **Presupuestos** por categoría o totales con alertas; **metas de ahorro** con aporte sugerido; **recurrentes** (arriendo, suscripciones, salario) que se registran solos. |
 | **Deudas** | Créditos y compras a cuotas con plan de pagos, abonos extra y saldo; **gastos compartidos** con saldos por persona y liquidación. |
 | **Reportes** | Dona por categoría, ingresos vs. gastos (6 meses), gasto acumulado, top 5 y comparativo con el periodo anterior. |
-| **Ajustes** | Día de inicio del mes, tema, categorías, exportar (CSV/JSON), importar, datos de ejemplo, borrar todo. |
+| **Ajustes** | Día de inicio del mes, tema, **fondo de la app** (foto de tu fototeca o degradado de la marca), categorías, exportar (CSV/JSON), importar, datos de ejemplo, borrar todo. |
 
 ## Cómo ejecutarla
 
@@ -87,6 +87,7 @@ Cubren dinero (parseo, formato, reparto exacto), fechas (bisiestos, fin de mes, 
 ```
 index.html            estructura, política de seguridad (CSP) y carga de scripts
 sw.js                 service worker: modo sin conexión
+img/                  logo de Haidiby Marketing Group (H, completo claro y oscuro)
 manifest.webmanifest  datos de instalación como app (íconos, colores)
 css/styles.css        tokens de diseño y componentes (claro/oscuro)
 js/money.js           dinero en COP: parseo, formato, reparto exacto
@@ -94,6 +95,7 @@ js/dates.js           fechas "AAAA-MM-DD", periodos mensuales, fin de mes
 js/validators.js      validaciones de formularios y del archivo a importar
 js/domain.js          reglas de cálculo (sin DOM ni localStorage)
 js/store.js           localStorage, migraciones, respaldo, importar/exportar
+js/fondo.js           fondo personalizable (foto reducida o degradado)
 js/charts.js          gráficas en SVG propio
 js/ui.js              componentes: hojas, formularios, avisos (sin innerHTML)
 js/vistas.js          estructura de la app + Inicio, Movimientos, Reportes, Ajustes
@@ -109,6 +111,7 @@ Decisiones de diseño relevantes:
 - **Gasto compartido:** solo *tu parte* cuenta como gasto tuyo; lo demás queda como saldo con cada persona. Liquidar no crea ingresos ni gastos.
 - **Aportes a metas y pagos de deuda** son salidas de dinero, pero en los reportes se agrupan en las categorías *Ahorro* y *Deudas*.
 - **Abono extra a una deuda** reduce el capital y acorta el plazo manteniendo la cuota.
+- **Fondo personalizado:** la foto se reduce (máx. 1400 px, JPEG) y se guarda en `localStorage` con su propia clave; no entra en los respaldos JSON ni en el CSV. Se aplica con un velo para que el texto siga legible.
 - **Seguridad:** sin peticiones de red, CSP estricta, todo texto del usuario entra al DOM con `textContent`, importación con validación de esquema y descarte de claves peligrosas, CSV protegido contra inyección de fórmulas.
 
 ## Limitaciones conocidas
