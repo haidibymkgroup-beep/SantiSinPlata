@@ -40,6 +40,13 @@ Luego, en el menú del navegador, **Añadir a pantalla de inicio**.
 
 **Opción B: publicarla** (GitHub Pages, Netlify Drop, etc.): sube la carpeta tal cual. Aunque la página esté en internet, **tus datos siguen guardándose solo en tu navegador**.
 
+### 4. Instalarla como app en el celular
+La app es una PWA: se instala con ícono propio, a pantalla completa y funciona sin internet. Para eso debe abrirse por **HTTPS** (por ejemplo, la opción B de arriba con GitHub Pages).
+- **Android (Chrome):** menú ⋮ → **Instalar app** (o **Añadir a pantalla de inicio**).
+- **iPhone (Safari):** botón Compartir → **Añadir a pantalla de inicio**. Debe ser Safari.
+
+La primera vez necesita conexión para descargarse; después abre sin internet. Si publicas cambios, sube el número de `CACHE` en `sw.js` (`santisinplata-v1` → `v2`) para que los celulares se actualicen; el cambio se ve la segunda vez que abren la app.
+
 > Importante: los datos pertenecen al navegador *y al sitio* donde los registraste. Si abres la app desde otra dirección (por ejemplo `file://` y luego `localhost`), verás datos distintos. Usa **Exportar JSON** → **Importar JSON** para pasarlos de uno a otro.
 
 ## Pruebas
@@ -79,6 +86,8 @@ Cubren dinero (parseo, formato, reparto exacto), fechas (bisiestos, fin de mes, 
 
 ```
 index.html            estructura, política de seguridad (CSP) y carga de scripts
+sw.js                 service worker: modo sin conexión
+manifest.webmanifest  datos de instalación como app (íconos, colores)
 css/styles.css        tokens de diseño y componentes (claro/oscuro)
 js/money.js           dinero en COP: parseo, formato, reparto exacto
 js/dates.js           fechas "AAAA-MM-DD", periodos mensuales, fin de mes

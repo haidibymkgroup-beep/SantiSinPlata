@@ -152,6 +152,11 @@
     ui.toast('Ocurrió un error inesperado. Si algo no se ve bien, recarga la página.', { error: true });
   });
 
+  // Modo sin conexión: solo cuando se sirve por http(s); con file:// el navegador no lo permite
+  if ('serviceWorker' in navigator && /^https?:$/.test(root.location.protocol)) {
+    root.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () { /* la app funciona igual */ }); });
+  }
+
   SSP.app = App;
   iniciar();
 })(window);
