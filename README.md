@@ -7,6 +7,26 @@ Control de gastos personal para el celular: registra tus ingresos y gastos del d
 - Tecnología: HTML + CSS + JavaScript sin frameworks ni dependencias.
 - Diseño: minimalista premium con la paleta de **Haidiby Marketing Group** (`#9C297F`, `#CA2374`, `#E4406F`, `#FE9191`), modo claro/oscuro y fondo personalizable. La guía de marca está en `CLAUDE.md`.
 
+## Dos versiones en este repositorio
+
+| Carpeta | Qué es |
+|---|---|
+| `docs/` | **Versión React** (la nueva): animaciones fluidas, hojas que se arrastran, gráficas que se dibujan y diseño adaptable a tablet y computador. Es el resultado compilado de `react/`; no se edita a mano. |
+| raíz (`index.html`, `js/`, `css/`) | Versión anterior sin frameworks. Su lógica de negocio (`js/money.js`, `dates.js`, `validators.js`, `domain.js`, `store.js`, `fondo.js`, `intro.js`) **la comparten las dos versiones**, y las pruebas la cubren. |
+
+Las dos usan los mismos datos (mismas claves de almacenamiento), así que cambiar de una a otra no pierde nada.
+
+### Trabajar con la versión React
+```bash
+cd react && npm install      # una sola vez
+npm run dev                  # servidor de desarrollo
+npm run build                # compila a docs/ (también desde la raíz: npm run build)
+```
+- Para publicarla en GitHub Pages: **Settings → Pages → Branch → carpeta `/docs`**. La dirección del sitio no cambia, así que tus datos y la app instalada siguen funcionando.
+- Tecnología: React 19, Motion (animaciones), Vite. El resultado es un script clásico, por lo que también abre con doble clic en `docs/index.html`.
+- `react/src/estado.js` es el estado global (guardado, deshacer, avisos); `react/src/ui/` son las piezas reutilizables (hojas, formularios, números animados); `react/src/vistas/` son las pantallas; `react/src/graficas/` son las gráficas.
+- El service worker (`docs/sw.js`) se genera solo en cada compilación con un nombre de caché nuevo: ya no hay que subir un número de versión a mano.
+
 ## Qué incluye
 
 | Sección | Qué hace |

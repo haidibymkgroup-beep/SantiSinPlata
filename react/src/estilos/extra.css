@@ -1,0 +1,80 @@
+/* Versión React: ajustes sobre css/styles.css (movimiento, hojas arrastrables, diseño adaptable) */
+
+.solo-lectores { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* El movimiento lo controla la biblioteca: se apagan las transiciones CSS equivalentes */
+.rr .barra-relleno, .rr .fab, .rr .btn, .rr .toast { transition: none; animation: none; }
+.rr .chip { transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.rr .entrada, .rr .entrada-grupo { transition: border-color .2s ease, box-shadow .2s ease; }
+.rr .entrada:focus-visible { outline: none; border-color: var(--foco); box-shadow: 0 0 0 3px color-mix(in srgb, var(--foco) 28%, transparent); }
+
+/* Navegación inferior con indicador que se desliza */
+.rr .nav-btn { position: relative; }
+.nav-ico { display: grid; place-items: center; }
+.nav-ind { position: absolute; top: 0; left: 50%; width: 30px; height: 3px; margin-left: -15px; border-radius: 0 0 6px 6px; background: var(--marca-grad); }
+
+/* Selectores y pestañas: la pastilla activa se mueve entre opciones */
+.rr .seg, .rr .tab { position: relative; background: transparent; }
+.rr .seg.activo, .rr .tab.activa { background: transparent; box-shadow: none; }
+.pastilla { position: absolute; inset: 0; border-radius: 11px; background: var(--seg-activo); box-shadow: 0 1px 4px rgba(60, 10, 50, .2); }
+.pastilla-txt { position: relative; z-index: 1; }
+
+/* Hojas: la posición la fija el contenedor, el movimiento lo hace la biblioteca */
+.capa-r { display: flex; align-items: flex-end; justify-content: center; }
+.capa-r .fondo { opacity: 1; transition: none; background: rgba(30, 8, 36, .5); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.capa-r .hoja { position: relative; left: auto; bottom: auto; transform: none; transition: none; width: min(100%, 480px); box-shadow: 0 -12px 40px rgba(30, 8, 36, .28); }
+.agarre { display: flex; justify-content: center; padding: 10px 0 0; touch-action: none; cursor: grab; flex: none; }
+.agarre span { width: 44px; height: 5px; border-radius: 99px; background: var(--borde); }
+.capa-r .hoja-enc { padding-top: 6px; }
+
+/* Tarjeta principal: un destello suave cruza la tarjeta de vez en cuando */
+.tarjeta.principal { position: relative; overflow: hidden; }
+.tarjeta.principal::after {
+  content: ""; position: absolute; inset: -40% -30%; pointer-events: none;
+  background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, .16) 50%, transparent 58%);
+  transform: translateX(-70%); animation: destello 8s ease-in-out 1.6s infinite;
+}
+@keyframes destello { 0%, 62% { transform: translateX(-70%); } 100% { transform: translateX(70%); } }
+@media (prefers-reduced-motion: reduce) { .tarjeta.principal::after { display: none; } }
+
+/* Gráficas */
+.dona-caja { position: relative; }
+.dona-centro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+.dona-txt-et { font-size: 12px; color: var(--texto-suave); }
+.dona-txt-valor { font-size: 22px; font-weight: 700; color: var(--texto); font-variant-numeric: tabular-nums; }
+
+/* ---------- Diseño adaptable: tablet y computador ---------- */
+@media (min-width: 768px) and (min-height: 520px) {
+  /* Menú lateral en vez de la barra inferior */
+  .rr .nav {
+    left: 0; right: auto; top: 0; bottom: 0; width: 96px; height: auto; transform: none;
+    display: flex; flex-direction: column; justify-content: center; align-items: stretch; gap: 6px;
+    border-top: 0; border-right: 1px solid var(--borde); padding: 12px 8px;
+  }
+  .rr .nav-btn { min-height: 72px; border-radius: 16px; }
+  .nav-ind { top: 50%; left: 0; width: 3px; height: 34px; margin: -17px 0 0; border-radius: 0 6px 6px 0; }
+  .rr #app { max-width: none; margin: 0 0 0 96px; }
+  .rr .encabezado { border-radius: 0 0 28px 28px; padding-left: max(28px, calc((100% - 1000px) / 2 + 28px)); padding-right: max(28px, calc((100% - 1000px) / 2 + 28px)); }
+  .rr .vista { max-width: 1040px; margin: 0 auto; padding: 24px 28px 64px; }
+  .rr .fab { right: 32px; bottom: 32px; }
+  .rr .toasts { left: calc(50% + 48px); bottom: 24px; }
+
+  /* Cuadros de diálogo centrados en lugar de hojas inferiores */
+  .capa-r { align-items: center; }
+  .capa-r .hoja { width: min(560px, 92vw); max-height: 88vh; border-radius: 24px; box-shadow: 0 30px 80px rgba(30, 8, 36, .45); }
+}
+
+@media (min-width: 1100px) and (min-height: 520px) {
+  /* Las pantallas largas se reparten en dos columnas */
+  .pantalla.columnas { column-count: 2; column-gap: 24px; }
+  .pantalla.columnas > * { break-inside: avoid; }
+  .pantalla.columnas > .saludo, .pantalla.columnas > .rep-barra, .pantalla.columnas > .rep-periodo { column-span: all; }
+}
+
+/* Barra de acciones del formulario siempre a mano al final de la hoja */
+.rr .hoja-cuerpo { padding-bottom: 0; }
+.rr .hoja-cuerpo .formulario > .acciones {
+  position: sticky; bottom: 0; z-index: 3; margin: 4px -16px 0; padding: 14px 16px calc(16px + var(--seguro-inf));
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--fondo) 0%, transparent), var(--fondo) 28%);
+}
+.rr .hoja-cuerpo > .acciones:last-child { padding-bottom: calc(24px + var(--seguro-inf)); }

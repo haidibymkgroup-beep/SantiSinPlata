@@ -1,0 +1,21 @@
+{
+  "name": "santisinplata-react",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SantiSinPlata (interfaz React con animaciones)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "motion": "14.9.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "6.1.2",
+    "vite": "8.3.5"
+  }
+}

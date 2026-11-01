@@ -23,3 +23,8 @@ Todo proyecto de esta cuenta lleva la insignia de **Haidiby Marketing Group**. A
 
 ## Texto
 - Idioma: español (Colombia). Firma en las apps: «una app de Haidiby Marketing Group».
+
+## Código
+- La interfaz actual es la de `react/` (compilada en `docs/`). No editar `docs/` a mano: se regenera con `npm run build`.
+- La lógica de negocio vive en `js/*.js` y es compartida; cualquier cambio de reglas va ahí, con su prueba en `tests/`.
+- Animaciones con Motion: solo `transform` y `opacity` donde se pueda, y respetar «reducir movimiento».
